@@ -17,19 +17,17 @@ import {
   Button,
 } from "@mui/material";
 import type { SelectChangeEvent } from "@mui/material/Select";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const HomePage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  // derived state
   const selectedCategory = searchParams.get("category") || "";
 
-  // fetch categories once
   useEffect(() => {
     const loadCategories = async () => {
       try {
@@ -42,7 +40,6 @@ const HomePage: React.FC = () => {
     loadCategories();
   }, []);
 
-  // fetch products when category changes
   useEffect(() => {
     const loadProducts = async () => {
       setLoading(true);
@@ -63,7 +60,6 @@ const HomePage: React.FC = () => {
     loadProducts();
   }, [selectedCategory]);
 
-  // handle filter change
   const handleCategoryChange = (event: SelectChangeEvent) => {
     const category = event.target.value as string;
     if (!category) {
@@ -79,7 +75,6 @@ const HomePage: React.FC = () => {
 
   return (
     <Container sx={{ mt: 4 }}>
-      {/* Filter section */}
       <Box
         sx={{
           display: "flex",
@@ -113,7 +108,6 @@ const HomePage: React.FC = () => {
         )}
       </Box>
 
-      {/* Product list */}
       {loading ? (
         <Box sx={{ display: "flex", justifyContent: "center", mt: 6 }}>
           <CircularProgress />

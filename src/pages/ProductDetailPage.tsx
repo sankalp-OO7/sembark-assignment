@@ -22,7 +22,6 @@ const ProductDetailPage: React.FC = observer(() => {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Fetch product by ID on mount
   useEffect(() => {
     const loadProduct = async () => {
       if (!id) return;
