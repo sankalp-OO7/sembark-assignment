@@ -6,7 +6,7 @@ import { observer } from "mobx-react-lite";
 
 const Navbar: React.FC = observer(() => {
   const cart = useContext(CartContext);
-
+  console.log(cart);
   return (
     <AppBar position="static" color="primary">
       <Toolbar
@@ -16,7 +16,6 @@ const Navbar: React.FC = observer(() => {
           mx: { xs: 1, sm: 3, md: 6, lg: 16 },
         }}
       >
-        {/* Left section: Logo + Brand name */}
         <Box
           component={RouterLink}
           to="/"
@@ -35,7 +34,7 @@ const Navbar: React.FC = observer(() => {
               width: 90,
               height: 50,
               objectFit: "cover",
-              objectPosition: "center 50%", // crops top/bottom 20%
+              objectPosition: "center 50%",
               borderRadius: "8px",
               mr: 1.5,
             }}
@@ -51,7 +50,6 @@ const Navbar: React.FC = observer(() => {
           </Typography>
         </Box>
 
-        {/* Right section: Cart */}
         <Button
           component={RouterLink}
           to="/cart"

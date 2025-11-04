@@ -1,52 +1,59 @@
 import { makeAutoObservable } from "mobx";
 import type { Product } from "../types";
 
-export class CartStore {
-  cartItems: Product[] = [];
+function createCartStore() {
+  const store = {
+    cartItems: [] as Product[],
 
-  constructor() {
-    makeAutoObservable(this);
-    const raw = sessionStorage.getItem("cart");
-    if (raw) {
+    addToCart(product: Product) {
+      store.cartItems.push(product);
+      store.sync();
+    },
+
+    removeFromCart(index: number) {
+      store.cartItems.splice(index, 1);
+      store.sync();
+    },
+
+    clearCart() {
+      store.cartItems = [];
+      store.sync();
+    },
+
+    get totalItems() {
+      return store.cartItems.length;
+    },
+
+    get totalPrice() {
+      const total = store.cartItems.reduce((s, p) => s + p.price, 0);
+      return total.toFixed(2);
+    },
+
+    sync() {
       try {
-        this.cartItems = JSON.parse(raw) as Product[];
+        sessionStorage.setItem("cart", JSON.stringify(store.cartItems));
       } catch {
         // ignore
       }
-    }
-  }
+    },
 
-  addToCart(product: Product) {
-    this.cartItems.push(product);
-    this.sync();
-  }
+    load() {
+      const raw = sessionStorage.getItem("cart");
+      if (raw) {
+        try {
+          store.cartItems = JSON.parse(raw) as Product[];
+        } catch {
+          // ignore
+        }
+      }
+    },
+  };
 
-  removeFromCart(index: number) {
-    this.cartItems.splice(index, 1);
-    this.sync();
-  }
+  makeAutoObservable(store);
 
-  clearCart() {
-    this.cartItems = [];
-    this.sync();
-  }
+  store.load();
 
-  get totalItems(): number {
-    return this.cartItems.length;
-  }
-
-  get totalPrice(): string {
-    const total = this.cartItems.reduce((s, p) => s + p.price, 0);
-    return total.toFixed(2);
-  }
-
-  sync() {
-    try {
-      sessionStorage.setItem("cart", JSON.stringify(this.cartItems));
-    } catch {
-      // ignore
-    }
-  }
+  return store;
 }
 
-export const cartStore = new CartStore();
+export const cartStore = createCartStore();
