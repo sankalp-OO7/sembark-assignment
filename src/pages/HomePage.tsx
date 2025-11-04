@@ -42,7 +42,6 @@ class HomePage extends Component<Props, State> {
   async componentDidMount() {
     await this.loadCategories();
 
-    // Apply filters from URL
     const categoryFromURL = this.props.searchParams.get("category");
     if (categoryFromURL) {
       await this.loadProductsByCategory(categoryFromURL);
@@ -104,7 +103,6 @@ class HomePage extends Component<Props, State> {
 
     return (
       <Container sx={{ mt: 4 }}>
-        {/* Filter Controls */}
         <Box
           sx={{
             display: "flex",
@@ -138,7 +136,6 @@ class HomePage extends Component<Props, State> {
           )}
         </Box>
 
-        {/* Product Grid */}
         {loading ? (
           <Box sx={{ display: "flex", justifyContent: "center", mt: 6 }}>
             <CircularProgress />
@@ -151,15 +148,10 @@ class HomePage extends Component<Props, State> {
   }
 }
 
-/**
- * ✅ Wrapper Component
- * Provides URL search params (React Router hook) to the class component
- */
 const HomePageWrapper: React.FC = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  // Helper to easily update search params
   const setParams = (params: Record<string, string>) => {
     const query = new URLSearchParams(params);
     navigate({ search: query.toString() });
