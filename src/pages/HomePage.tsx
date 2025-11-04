@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import {
   fetchProducts,
   fetchCategories,
@@ -19,6 +19,12 @@ class HomePage extends Component<object, State> {
   async componentDidMount() {
     try {
       const products = await fetchProducts();
+      console.log("Products : " + products);
+      const categories = await fetchCategories();
+      console.log("categories : " + categories);
+      const categoryProducts = await fetchProductsByCategory(categories[0]);
+      console.log(categoryProducts);
+
       this.setState({ products, loading: false });
     } catch (error) {
       console.error("Failed to fetch products:", error);

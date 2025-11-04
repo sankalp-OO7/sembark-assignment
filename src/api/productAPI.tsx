@@ -20,8 +20,12 @@ export const fetchCategories = async (): Promise<string[]> => {
   return res.json();
 };
 
-export const fetchProductsByCategory = async (category: string): Promise<Product[]> => {
-  const res = await fetch(`${BASE}/products/category/${encodeURIComponent(category)}`);
+export const fetchProductsByCategory = async (
+  category: string
+): Promise<Product[]> => {
+  const res = await fetch(
+    `${BASE}/products/category/${encodeURIComponent(category)}`
+  );
   if (!res.ok) throw new Error("Failed to fetch products by category");
   return res.json();
 };
