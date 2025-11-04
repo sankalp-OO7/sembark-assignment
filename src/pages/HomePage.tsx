@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import {
   fetchProducts,
   fetchCategories,
@@ -19,145 +19,110 @@ import {
 import type { SelectChangeEvent } from "@mui/material/Select";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
-interface Props {
-  searchParams: URLSearchParams;
-  setSearchParams: (params: Record<string, string>) => void;
-}
-
-interface State {
-  products: Product[];
-  categories: string[];
-  selectedCategory: string;
-  loading: boolean;
-}
-
-class HomePage extends Component<Props, State> {
-  state: State = {
-    products: [],
-    categories: [],
-    selectedCategory: "",
-    loading: true,
-  };
-
-  async componentDidMount() {
-    await this.loadCategories();
-
-    const categoryFromURL = this.props.searchParams.get("category");
-    if (categoryFromURL) {
-      await this.loadProductsByCategory(categoryFromURL);
-    } else {
-      await this.loadAllProducts();
-    }
-  }
-
-  loadCategories = async () => {
-    try {
-      const categories = await fetchCategories();
-      this.setState({ categories });
-    } catch (error) {
-      console.error("Failed to fetch categories:", error);
-    }
-  };
-
-  loadAllProducts = async () => {
-    try {
-      this.setState({ loading: true });
-      const products = await fetchProducts();
-      this.setState({ products, loading: false, selectedCategory: "" });
-    } catch (error) {
-      console.error("Failed to fetch products:", error);
-      this.setState({ loading: false });
-    }
-  };
-
-  loadProductsByCategory = async (category: string) => {
-    try {
-      this.setState({ loading: true });
-      const products = await fetchProductsByCategory(category);
-      this.setState({ products, loading: false, selectedCategory: category });
-    } catch (error) {
-      console.error("Failed to fetch products:", error);
-      this.setState({ loading: false });
-    }
-  };
-
-  handleCategoryChange = async (event: SelectChangeEvent) => {
-    const category = event.target.value as string;
-
-    if (!category) {
-      this.props.setSearchParams({});
-      await this.loadAllProducts();
-    } else {
-      this.props.setSearchParams({ category });
-      await this.loadProductsByCategory(category);
-    }
-  };
-
-  clearFilter = async () => {
-    this.props.setSearchParams({});
-    await this.loadAllProducts();
-  };
-
-  render() {
-    const { products, categories, selectedCategory, loading } = this.state;
-
-    return (
-      <Container sx={{ mt: 4 }}>
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            gap: 2,
-            mb: 3,
-          }}
-        >
-          <FormControl sx={{ minWidth: 200 }}>
-            <InputLabel id="category-label">Category</InputLabel>
-            <Select
-              labelId="category-label"
-              label="Category"
-              value={selectedCategory}
-              onChange={this.handleCategoryChange}
-            >
-              <MenuItem value="">All</MenuItem>
-              {categories.map((cat) => (
-                <MenuItem key={cat} value={cat}>
-                  {cat}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          {selectedCategory && (
-            <Button variant="outlined" onClick={this.clearFilter}>
-              Clear Filter
-            </Button>
-          )}
-        </Box>
-
-        {loading ? (
-          <Box sx={{ display: "flex", justifyContent: "center", mt: 6 }}>
-            <CircularProgress />
-          </Box>
-        ) : (
-          <ProductGrid products={products} />
-        )}
-      </Container>
-    );
-  }
-}
-
-const HomePageWrapper: React.FC = () => {
-  const [searchParams] = useSearchParams();
+const HomePage: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const setParams = (params: Record<string, string>) => {
-    const query = new URLSearchParams(params);
-    navigate({ search: query.toString() });
+  // derived state
+  const selectedCategory = searchParams.get("category") || "";
+
+  // fetch categories once
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const list = await fetchCategories();
+        setCategories(list);
+      } catch (err) {
+        console.error("Failed to fetch categories:", err);
+      }
+    };
+    loadCategories();
+  }, []);
+
+  // fetch products when category changes
+  useEffect(() => {
+    const loadProducts = async () => {
+      setLoading(true);
+      try {
+        if (selectedCategory) {
+          const items = await fetchProductsByCategory(selectedCategory);
+          setProducts(items);
+        } else {
+          const all = await fetchProducts();
+          setProducts(all);
+        }
+      } catch (err) {
+        console.error("Failed to fetch products:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadProducts();
+  }, [selectedCategory]);
+
+  // handle filter change
+  const handleCategoryChange = (event: SelectChangeEvent) => {
+    const category = event.target.value as string;
+    if (!category) {
+      setSearchParams({});
+    } else {
+      setSearchParams({ category });
+    }
   };
 
-  return <HomePage searchParams={searchParams} setSearchParams={setParams} />;
+  const clearFilter = () => {
+    setSearchParams({});
+  };
+
+  return (
+    <Container sx={{ mt: 4 }}>
+      {/* Filter section */}
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          gap: 2,
+          mb: 3,
+        }}
+      >
+        <FormControl sx={{ minWidth: 200 }}>
+          <InputLabel id="category-label">Category</InputLabel>
+          <Select
+            labelId="category-label"
+            label="Category"
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+          >
+            <MenuItem value="">All</MenuItem>
+            {categories.map((cat) => (
+              <MenuItem key={cat} value={cat}>
+                {cat}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        {selectedCategory && (
+          <Button variant="outlined" onClick={clearFilter}>
+            Clear Filter
+          </Button>
+        )}
+      </Box>
+
+      {/* Product list */}
+      {loading ? (
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 6 }}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <ProductGrid products={products} />
+      )}
+    </Container>
+  );
 };
 
-export default HomePageWrapper;
+export default HomePage;
