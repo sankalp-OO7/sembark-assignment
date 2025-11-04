@@ -12,6 +12,8 @@ import {
   ListItemText,
   Divider,
   Box,
+  Button,
+  Stack,
 } from "@mui/material";
 
 const CartPage: ComponentType = observer(() => {
@@ -19,9 +21,24 @@ const CartPage: ComponentType = observer(() => {
 
   return (
     <Paper sx={{ p: 3, mt: 2 }}>
-      <Typography variant="h5" sx={{ mb: 2 }}>
-        My Cart ({cart.totalItems})
-      </Typography>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        sx={{ mb: 2 }}
+      >
+        <Typography variant="h5">My Cart ({cart.totalItems})</Typography>
+
+        {cart.totalItems > 0 && (
+          <Button
+            color="error"
+            variant="outlined"
+            onClick={() => cart.clearCart()}
+          >
+            Clear Cart
+          </Button>
+        )}
+      </Stack>
 
       {cart.totalItems === 0 ? (
         <Typography color="text.secondary">
@@ -31,7 +48,19 @@ const CartPage: ComponentType = observer(() => {
         <List>
           {cart.cartItems.map((item, index) => (
             <React.Fragment key={`${item.id}-${index}`}>
-              <ListItem alignItems="flex-start">
+              <ListItem
+                alignItems="flex-start"
+                secondaryAction={
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    size="small"
+                    onClick={() => cart.removeFromCart(index)}
+                  >
+                    Remove
+                  </Button>
+                }
+              >
                 <ListItemAvatar>
                   <Avatar
                     variant="square"
@@ -57,7 +86,7 @@ const CartPage: ComponentType = observer(() => {
 
       <Box sx={{ mt: 3 }}>
         <Typography variant="subtitle1" fontWeight="bold">
-          Total Price: ${cart.totalPrice}
+          Total Price: ₹{cart.totalPrice}
         </Typography>
       </Box>
     </Paper>

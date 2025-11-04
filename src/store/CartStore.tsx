@@ -26,6 +26,11 @@ export class CartStore {
     this.sync();
   }
 
+  clearCart() {
+    this.cartItems = [];
+    this.sync();
+  }
+
   get totalItems(): number {
     return this.cartItems.length;
   }
