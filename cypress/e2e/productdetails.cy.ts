@@ -1,7 +1,6 @@
- 
-describe("Sembark Store - Homepage", () => {
+describe("Sembark Store - product details page", () => {
   beforeEach(() => {
-    cy.visit("/");
+    cy.visit("/product/1/details");
   });
 
   it("should display navbar with logo and store title", () => {
