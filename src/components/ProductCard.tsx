@@ -25,7 +25,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           {product.title}
         </Typography>
         <Typography variant="subtitle2" color="text.secondary">
-          ${product.price}
+          ₹{product.price}
         </Typography>
       </CardContent>
       <CardActions>

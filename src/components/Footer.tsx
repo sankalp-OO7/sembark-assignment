@@ -8,7 +8,7 @@ const Footer: React.FC = observer(() => {
   return (
     <Box sx={{ bgcolor: "#fafafa", py: 2, mt: 3 }}>
       <Typography align="center">
-        Total Items: {cart.totalItems} — Total: ${cart.totalPrice}
+        Total Items: {cart.totalItems} — Total: ₹{cart.totalPrice}
       </Typography>
     </Box>
   );

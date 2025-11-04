@@ -42,7 +42,7 @@ const CartPage: ComponentType = observer(() => {
                 </ListItemAvatar>
                 <ListItemText
                   primary={item.title}
-                  secondary={`$${item.price}`}
+                  secondary={`₹${item.price}`}
                   primaryTypographyProps={{
                     variant: "subtitle1",
                     fontWeight: 500,
