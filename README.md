@@ -1,4 +1,4 @@
-# 🛍️ Sembark Frontend React Assignment
+# 🛍️ Sembark Frontend React Assignment https://sembark-assignment-udi1.vercel.app/
 
 This is my submission for the **Frontend Developer Assignment** by **Sembark Technologies**.  
 The project is a small **e-commerce web app** built with **React (TypeScript)**, **MUI**, and **MobX**, where users can browse products, view details, and add them to a cart.
@@ -64,24 +64,21 @@ src/
 Clone the repository and install dependencies:
 
 ```bash
-git clone <your_repo_url>
+git clone https://github.com/sankalp-OO7/sembark-assignment.git
 cd sembark-assignment
 npm install
-Run the development server:
-
 npm run dev
 
-
+Now project Runs on development server:
 Open your browser and go to:
-
 http://localhost:5173/
-production Link :
+production Link : https://sembark-assignment-udi1.vercel.app/
 
-🧠 State Management (MobX + Context)
+ State Management (MobX + Context)
 
 The cart logic is managed through a MobX store wrapped inside a React Context.
 
-CartStore.ts — Defines observable states, actions, and computed values like totalItems & totalPrice.
+CartStore.tsx — Defines observable states, actions, and computed values like totalItems & totalPrice.
 
 CartContext.tsx — Provides the store across all components.
 
@@ -95,43 +92,23 @@ Mobile-first approach with flexible grid layout.
 
 Inline styles & MUI sx prop ensure a consistent responsive design.
 
-📸 Screenshots (Optional)
-Home Page	Product Details	Cart Page
-🏠 Product grid	📄 Add to Cart	🛒 Cart summary
+ Home Page,	Product Details	,Cart Page,
+🏠 Product grid	📄, Add to Cart,	🛒 Cart summary
 
-(Add screenshots here once deployed)
-
-📜 Assignment Requirement Mapping
+ 
+ 
 Requirement	Implemented
-Product Listing Page	✅
-Product Detail Page	✅
-Add to Cart	✅
-Remove from Cart	❌ (not required)
-Cart Footer with Summary	✅
-Dynamic Routing	✅
-Context + MobX	✅
-Responsive Inline Styling	✅ (via MUI)
-TypeScript	✅
-Persist Cart (Bonus)	✅
-E2E Testing Setup (Bonus)	✅ (Cypress ready)
-🧪 Testing (Optional)
-
-Basic end-to-end tests can be configured using Cypress or Playwright.
-
-Example ideas:
-
-Load Home Page and verify product cards render.
-
-Navigate to product details and verify price/description.
-
-Click “Add to Cart” and verify cart count increases.
-
-Links:
-
-Cypress Docs
-
-Playwright Docs
-
+Product Listing Page	 
+Product Detail Page	 
+Add to Cart	 
+Remove from Cart	 
+Cart Footer with Summary	 
+Dynamic Routing 
+Context + MobX	 
+Responsive Inline Styling	  (via MUI)
+TypeScript	 
+Persist Cart (Bonus)	 
+  
 👨‍💻 Developer
 
 Sankalp Racchewar
@@ -151,8 +128,7 @@ Realistic user experience and maintainability.
 
 “Being a web developer is good — but combining clean architecture, state management, and solid fundamentals is what makes a great one.”
 
-Made with ❤️ using React, TypeScript, and Material UI.
-
+ 
 
 
 
