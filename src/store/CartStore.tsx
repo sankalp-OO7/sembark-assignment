@@ -6,7 +6,6 @@ export class CartStore {
 
   constructor() {
     makeAutoObservable(this);
-    // optional: load from session (bonus)
     const raw = sessionStorage.getItem("cart");
     if (raw) {
       try {
@@ -22,7 +21,6 @@ export class CartStore {
     this.sync();
   }
 
-  // removal not allowed per assignment - but keep helper
   removeFromCart(index: number) {
     this.cartItems.splice(index, 1);
     this.sync();
@@ -38,7 +36,6 @@ export class CartStore {
   }
 
   sync() {
-    // persist to sessionStorage (bonus)
     try {
       sessionStorage.setItem("cart", JSON.stringify(this.cartItems));
     } catch {

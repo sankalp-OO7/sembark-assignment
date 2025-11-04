@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import CartPage from "./pages/CartPage";
 import { Container } from "@mui/material";
+import ErrorPage from "./components/ErrorPage";
 
 const App: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ const App: React.FC = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/product/:id/details" element={<ProductDetailPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Container>
       <Footer />

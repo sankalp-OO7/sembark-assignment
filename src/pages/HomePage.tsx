@@ -4,7 +4,7 @@ import {
   fetchCategories,
   fetchProductsByCategory,
 } from "../api/productAPI";
-import type { Product } from "../types"; // ✅ correct import for Product type
+import type { Product } from "../types";
 import ProductGrid from "../components/ProductGrid";
 import { Container, CircularProgress } from "@mui/material";
 

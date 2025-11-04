@@ -14,9 +14,6 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-/**
- * Helper wrapper to inject `params` and `navigate` into a class component.
- */
 function withRouter<
   P extends { params: { id?: string }; navigate: (path: string) => void }
 >(ComponentClass: React.ComponentType<P>) {
@@ -29,7 +26,6 @@ function withRouter<
   };
 }
 
-// ✅ Props interface simplified for React Router v6
 interface Props {
   params: { id?: string };
   navigate: (path: string) => void;

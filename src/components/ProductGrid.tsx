@@ -23,10 +23,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
           key={product.id}
           sx={{
             width: {
-              xs: "100%", // full width on mobile
-              sm: "48%", // two per row on small screens
-              md: "30%", // three per row on medium
-              lg: "22%", // four per row on large
+              xs: "100%",
+              sm: "48%",
+              md: "30%",
+              lg: "22%",
             },
           }}
         >
