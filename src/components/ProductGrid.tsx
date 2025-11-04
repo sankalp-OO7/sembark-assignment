@@ -8,6 +8,7 @@ interface ProductGridProps {
 }
 
 const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
+  console.log(products);
   return (
     <Box
       sx={{

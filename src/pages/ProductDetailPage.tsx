@@ -27,6 +27,7 @@ const ProductDetailPage: React.FC = observer(() => {
       if (!id) return;
       try {
         const data = await fetchProductById(Number(id));
+        console.log(data);
         setProduct(data);
       } catch (error) {
         console.error("Error fetching product:", error);
