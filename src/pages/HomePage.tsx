@@ -8,7 +8,7 @@ import type { Product } from "../types";
 import ProductGrid from "../components/ProductGrid";
 import {
   Container,
-  CircularProgress,
+  // CircularProgress,
   Box,
   FormControl,
   InputLabel,
@@ -18,13 +18,13 @@ import {
 } from "@mui/material";
 import type { SelectChangeEvent } from "@mui/material/Select";
 import { useSearchParams } from "react-router-dom";
+import ShimmerGrid from "../components/ShimmerGrid";
 
 const HomePage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchParams, setSearchParams] = useSearchParams();
-  // const navigate = useNavigate();
 
   const selectedCategory = searchParams.get("category") || "";
 
@@ -110,7 +110,7 @@ const HomePage: React.FC = () => {
 
       {loading ? (
         <Box sx={{ display: "flex", justifyContent: "center", mt: 6 }}>
-          <CircularProgress />
+          <ShimmerGrid />
         </Box>
       ) : (
         <ProductGrid products={products} />
