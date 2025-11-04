@@ -11,8 +11,8 @@ import {
   CardMedia,
   Typography,
   Button,
-  CircularProgress,
 } from "@mui/material";
+import ShimmerGrid from "../components/ShimmerGrid";
 
 const ProductDetailPage: React.FC = observer(() => {
   const { id } = useParams<{ id?: string }>();
@@ -45,8 +45,8 @@ const ProductDetailPage: React.FC = observer(() => {
 
   if (loading) {
     return (
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 6 }}>
-        <CircularProgress />
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 0 }}>
+        <ShimmerGrid count={1} width={1100} height={320} borderRadius={2} />
       </Box>
     );
   }

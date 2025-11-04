@@ -3,6 +3,9 @@ import { Box, keyframes } from "@mui/material";
 
 interface Props {
   count?: number;
+  width?: number;
+  height?: number;
+  borderRadius?: number;
 }
 
 const shimmer = keyframes`
@@ -14,7 +17,12 @@ const shimmer = keyframes`
   }
 `;
 
-const ShimmerGrid: React.FC<Props> = ({ count = 8 }) => {
+const ShimmerGrid: React.FC<Props> = ({
+  count = 8,
+  width = 250,
+  height = 300,
+  borderRadius = 1,
+}) => {
   const items = Array.from({ length: count }, (_, i) => i);
 
   return (
@@ -33,13 +41,13 @@ const ShimmerGrid: React.FC<Props> = ({ count = 8 }) => {
           sx={{
             width: {
               xs: "100%",
-              sm: "48%",
-              md: "30%",
-              lg: "22%",
+              sm: `${width * 0.9}px`,
+              md: `${width}px`,
+              lg: `${width}px`,
             },
-            height: 300,
-            minWidth: 200,
-            borderRadius: 2,
+            height,
+            minWidth: 180,
+            borderRadius,
             background:
               "linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)",
             backgroundSize: "200% 100%",

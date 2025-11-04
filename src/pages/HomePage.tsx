@@ -32,6 +32,7 @@ const HomePage: React.FC = () => {
     const loadCategories = async () => {
       try {
         const list = await fetchCategories();
+        console.log("categories list : " + list);
         setCategories(list);
       } catch (err) {
         console.error("Failed to fetch categories:", err);
@@ -46,9 +47,11 @@ const HomePage: React.FC = () => {
       try {
         if (selectedCategory) {
           const items = await fetchProductsByCategory(selectedCategory);
+          console.log("products by category : " + items);
           setProducts(items);
         } else {
           const all = await fetchProducts();
+          console.log("all products : " + all);
           setProducts(all);
         }
       } catch (err) {
